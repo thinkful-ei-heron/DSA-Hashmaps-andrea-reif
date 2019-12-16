@@ -2,7 +2,7 @@
 /* eslint-disable indent */
 
 const HashMaps = require('./hashmap');
-//Drill 1:
+//#1
 function main() {
 	let lotr = new HashMaps();
 	HashMaps.MAX_LOAD_RATIO = 0.5;
@@ -21,7 +21,7 @@ function main() {
 	// console.log(lotr.length, lotr.get('Hobbit'), lotr.get('Maiar'), lotr._capacity);
 }
 
-//2 WhatDoesThisDo
+//#2 WhatDoesThisDo
 const WhatDoesThisDo = function() {
 	let str1 = 'Hello World.';
 	let str2 = 'Hello World.';
@@ -40,30 +40,26 @@ const WhatDoesThisDo = function() {
 
 main();
 
-// #3.1
+//#3.1
 //[22, 88, undefined, undefined, 4, 15, 28, 17, 59, 31, 10]
 // #3.2:
 //[undefined, 28 -> 19 -> 10, 20, 12, undefined, 5, 15 -> 33, undefined, 17]
 
-//4 Remove duplicates
+//#4 Remove duplicates
 //input: 'google'
 //output: 'gole
-//input:  'google all that you think can think of'
 function remDuplicates(str) {
 	let newHash = new HashMaps();
 
 	for (let i = 0; i < str.length; i++) {
 		newHash.set(str[i], str[i]);
 	}
-	// console.log(newHash);
 	let res = '';
 	for (let i = 0; i < newHash._hashTable.length; i++) {
 		if (newHash._hashTable[i]) {
 			res += newHash._hashTable[i].value;
 		}
 	}
-	// console.log(res);
-
 	let newStr = '';
 	for (let i = 0; i < str.length; i++) {
 		if (res.includes(str[i]) && !newStr.includes(str[i])) {
@@ -75,7 +71,7 @@ function remDuplicates(str) {
 // console.log(remDuplicates('google'));
 // console.log(remDuplicates('google all that you think can think of'));
 
-//5 Palindrome
+//#5 Palindrome
 function checkPalindrome(str) {
 	let newHash = new HashMaps();
 
@@ -99,3 +95,18 @@ function checkPalindrome(str) {
 // console.log(checkPalindrome('acecarr'));
 // console.log(checkPalindrome('north'));
 // console.log(checkPalindrome('dood'));
+
+//#6 Anagram
+function anagram(words) {
+	let newHash = new Map();
+
+	words.forEach((word) => {
+		const groupWords = sortWords(word);
+		const group = newHash.get(groupWords) || [];
+		newHash.set(groupWords, [ ...group, word ]);
+	});
+	return Array.from(newHash.values());
+}
+const sortWords = (word) => word.split('').sort().join('');
+
+// console.log(anagram([ 'east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race' ]));
