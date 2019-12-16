@@ -2,6 +2,7 @@
 /* eslint-disable indent */
 
 const HashMaps = require('./hashmap');
+const SCMaps = require('./separateChaining');
 //#1
 function main() {
 	let lotr = new HashMaps();
@@ -110,3 +111,25 @@ function anagram(words) {
 const sortWords = (word) => word.split('').sort().join('');
 
 // console.log(anagram([ 'east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race' ]));
+
+//#7 Separate Chaining
+function SCmain() {
+	let lotr2 = new SCMaps();
+	SCMaps.MAX_LOAD_RATIO = 0.5;
+	SCMaps.SIZE_RATIO = 3;
+	lotr2.set('Hobbit', 'Bilbo');
+	lotr2.set('Hobbit', 'Frodo');
+	lotr2.set('Wizard', 'Gandolf');
+	lotr2.set('Human', 'Aragon');
+	lotr2.set('Elf', 'Legolas');
+	lotr2.set('Maiar', 'The Necromancer');
+	lotr2.set('Maiar', 'Sauron');
+	lotr2.set('RingBearer', 'Gollum');
+	lotr2.set('LadyOfLight', 'Galadriel');
+	lotr2.set('HalfElven', 'Arwen');
+	lotr2.set('Ent', 'Treebeard');
+	// console.log(lotr2.length, lotr2.get('Hobbit'), lotr2.get('Maiar'), lotr2._capacity);
+	// console.log(lotr2._hashTable);
+}
+
+SCmain();

@@ -1,3 +1,5 @@
+'use strict';
+/* eslint-disable indent */
 class HashMap {
 	constructor(initialCapacity = 8) {
 		this.length = 0;

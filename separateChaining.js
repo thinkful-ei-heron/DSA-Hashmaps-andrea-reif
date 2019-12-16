@@ -1,8 +1,14 @@
 'use strict';
 /* eslint-disable indent */
-const linkedList = require('./linkedList');
-
-class HashMap {
+class _Node {
+	constructor(key, value, next, DELETED) {
+		this.key = key;
+		this.value = value;
+		this.next = next;
+		this.DELETED = false;
+	}
+}
+class SCMap {
 	constructor(initialCapacity = 8) {
 		this.length = 0;
 		this._hashTable = [];
@@ -14,44 +20,58 @@ class HashMap {
 		if (this._hashTable[index] === undefined) {
 			throw new Error('Key error');
 		}
-		return this._hashTable[index].value;
+		let currNode = this._hashTable[index];
+		while (currNode.key !== key && currNode.next !== null) {
+			currNode = currNode.next;
+		}
+		if (currNode.key === key) {
+			return currNode.value;
+		} else return null;
 	}
 	set(key, value) {
 		const loadRatio = (this.length + this._deleted + 1) / this._capacity;
-		if (loadRatio > HashMap.MAX_LOAD_RATIO) {
-			this._resize(this._capacity * HashMap.SIZE_RATIO);
+		if (loadRatio > SCMap.MAX_LOAD_RATIO) {
+			this._resize(this._capacity * SCMap.SIZE_RATIO);
 		}
 		//Find the slot where this key should be in
 		const index = this._findSlot(key);
 		if (!this._hashTable[index]) {
 			this.length++;
+			this._hashTable[index] = new _Node(key, value, null);
+		} else {
+			let currNode = this._hashTable[index];
+			while (currNode.next !== null) {
+				currNode = currNode.next;
+			}
+			currNode.next = new _Node(key, value, null);
 		}
-		this._hashTable[index] = {
-			key,
-			value,
-			DELETED: false
-		};
 	}
 	delete(key) {
 		const index = this._findSlot(key);
-		const slot = this._hashTable[index];
-		if (slot === undefined) {
+		const currNode = this._hashTable[index];
+		if (currNode === undefined) {
 			throw new Error('Key error');
 		}
-		slot.DELETED = true;
-		this.length--;
-		this._deleted++;
-	}
-	_findSlot(key) {
-		const hash = HashMap._hashString(key);
-		const start = hash % this._capacity;
-		for (let i = start; i < start + this._capacity; i++) {
-			const index = i % this._capacity;
-			const slot = this._hashTable[index];
-			if (slot === undefined || (slot.key === key && !slot.DELETED)) {
-				return index;
+		if (currNode.next && currNode.key === key) {
+			this._hashTable[index].next;
+			return;
+		}
+		while (currNode.next !== null) {
+			if (currNode.next.key === key) {
+				currNode.next = currNode.next.next;
+				return;
 			}
 		}
+		if (currNode === key) {
+			currNode.DELETED = true;
+			this.length--;
+			this._deleted++;
+		}
+	}
+	_findSlot(key) {
+		const hash = SCMap._hashString(key);
+		const start = hash % this._capacity;
+		return start;
 	}
 	_resize(size) {
 		const oldSlots = this._hashTable;
@@ -81,4 +101,4 @@ class HashMap {
 		return hash >>> 0;
 	}
 }
-module.exports = HashMap;
+module.exports = SCMap;
