@@ -74,3 +74,28 @@ function remDuplicates(str) {
 }
 // console.log(remDuplicates('google'));
 // console.log(remDuplicates('google all that you think can think of'));
+
+//5 Palindrome
+function checkPalindrome(str) {
+	let newHash = new HashMaps();
+
+	for (let i = 0; i < str.length; i++) {
+		newHash.set(str[i], i);
+	}
+	let num = 0;
+	for (let i = 0; i < str.length; i++) {
+		if (newHash.get(str[i]) !== i) {
+			num--;
+		} else {
+			num++;
+		}
+	}
+	if (num > 1) {
+		return false;
+	}
+	return true;
+}
+
+// console.log(checkPalindrome('acecarr'));
+// console.log(checkPalindrome('north'));
+// console.log(checkPalindrome('dood'));
