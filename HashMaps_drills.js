@@ -1,4 +1,6 @@
 'use strict';
+/* eslint-disable indent */
+
 const HashMaps = require('./hashmap');
 //Drill 1:
 function main() {
@@ -16,24 +18,24 @@ function main() {
 	lotr.set('LadyOfLight', 'Galadriel');
 	lotr.set('HalfElven', 'Arwen');
 	lotr.set('Ent', 'Treebeard');
-	console.log(lotr.length, lotr.get('Hobbit'), lotr.get('Maiar'), lotr._capacity);
+	// console.log(lotr.length, lotr.get('Hobbit'), lotr.get('Maiar'), lotr._capacity);
 }
 
 //2 WhatDoesThisDo
 const WhatDoesThisDo = function() {
 	let str1 = 'Hello World.';
 	let str2 = 'Hello World.';
-	let map1 = new HashMap();
+	let map1 = new HashMaps();
 	map1.set(str1, 10);
 	map1.set(str2, 20);
-	let map2 = new HashMap();
+	let map2 = new HashMaps();
 	let str3 = str1; //str1, 10
 	let str4 = str2; //str2, 20
 	map2.set(str3, 20); //overwrites value
 	map2.set(str4, 10);
 
-	console.log(map1.get(str1));
-	console.log(map2.get(str3));
+	// console.log(map1.get(str1));
+	// console.log(map2.get(str3));
 };
 
 main();
@@ -42,3 +44,33 @@ main();
 //[22, 88, undefined, undefined, 4, 15, 28, 17, 59, 31, 10]
 // #3.2:
 //[undefined, 28 -> 19 -> 10, 20, 12, undefined, 5, 15 -> 33, undefined, 17]
+
+//4 Remove duplicates
+//input: 'google'
+//output: 'gole
+//input:  'google all that you think can think of'
+function remDuplicates(str) {
+	let newHash = new HashMaps();
+
+	for (let i = 0; i < str.length; i++) {
+		newHash.set(str[i], str[i]);
+	}
+	// console.log(newHash);
+	let res = '';
+	for (let i = 0; i < newHash._hashTable.length; i++) {
+		if (newHash._hashTable[i]) {
+			res += newHash._hashTable[i].value;
+		}
+	}
+	// console.log(res);
+
+	let newStr = '';
+	for (let i = 0; i < str.length; i++) {
+		if (res.includes(str[i]) && !newStr.includes(str[i])) {
+			newStr += str[i];
+		}
+	}
+	return newStr;
+}
+// console.log(remDuplicates('google'));
+// console.log(remDuplicates('google all that you think can think of'));
