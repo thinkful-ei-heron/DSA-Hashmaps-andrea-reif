@@ -1,3 +1,7 @@
+'use strict';
+/* eslint-disable indent */
+const linkedList = require('./linkedList');
+
 class HashMap {
 	constructor(initialCapacity = 8) {
 		this.length = 0;
